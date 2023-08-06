@@ -1,0 +1,39 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Cat Party!!!</h1>
+<imageswitcher />
+<img src="@currentImage" alt="Image" @onclick="ChangeImage" style="cursor: pointer" />
+<button class="btn btn-primary" @onclick="BogItDown">Party Pooper</button>
+
+
+
+
+@code {
+
+    private async Task BogItDown()
+    {
+        await Task.Delay(10000);
+    }
+    //private void BogItDown()
+    //{
+    //    Thread.Sleep(10000);
+    //}
+    private string[] imagePaths = new string[]
+       {
+        "cat-1a.png", // Replace with the actual paths of your images
+        "cat-1b.png",
+
+       // Add more image paths as needed
+       };
+
+    private int currentImageIndex = 0;
+    private string currentImage => $"images/{imagePaths[currentImageIndex]}";
+
+    private void ChangeImage()
+    {
+        // Increment the index and wrap around to the first image when it reaches the last one
+        currentImageIndex = (currentImageIndex + 1) % imagePaths.Length;
+    }
+    }

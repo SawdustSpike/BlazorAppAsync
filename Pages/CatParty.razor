@@ -1,0 +1,52 @@
+﻿@page "/catParty"
+
+<PageTitle>Cat Party!!!</PageTitle>
+
+<h1>Cat Party!!!</h1>
+<div style="position: absolute; top: 100px; right: 10px;">
+    <button class="btn btn-primary" @onclick="PartyPooper">Non Async Party Pooper</button>
+    <button class="btn btn-primary" @onclick="AsyncPartyDontStop">Ain't no Party Like an Async Party!</button>
+</div>
+
+<img src="@currentImage" alt="Click me, I Dance!" @onclick="ChangeImage" style="cursor: pointer" />
+<img src="@currentImage2" alt="Click me, I Dance!" @onclick="ChangeImage2" style="cursor: pointer" />
+
+
+@code {
+
+    private int currentImageIndex = 0;
+    private int currentImageIndex2 = 0;
+
+    private string currentImage => $"images/{imagePaths[currentImageIndex]}";
+    private string currentImage2 => $"images/{imagePath2[currentImageIndex2]}";
+  
+    private string[] imagePaths = new string[]
+       {
+        "cat-1a.png",
+        "cat-1b.png",
+       };
+       private string[] imagePath2 = new string[]
+       {
+        "cat 2-a.jpg",
+        "cat 2-b.jpg",
+       };    
+
+    private async Task AsyncPartyDontStop()
+    {
+        await Task.Delay(10000);
+    }
+
+    private void ChangeImage()
+    {
+        currentImageIndex = (currentImageIndex == 1) ? 0 : 1;
+    }private void ChangeImage2()
+    {
+        currentImageIndex2 = (currentImageIndex2 == 1) ? 0 : 1;
+    }   
+
+    private void PartyPooper()
+    {
+        Thread.Sleep(10000);
+    }
+
+}

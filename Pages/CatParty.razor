@@ -3,37 +3,52 @@
 <PageTitle>Cat Party!!!</PageTitle>
 
 <h1>Cat Party!!!</h1>
-<div style="position: absolute; top: 100px; right: 10px;">
-    <button class="btn btn-primary" @onclick="PartyPooper">Non Async Party Pooper</button>
-    <button class="btn btn-primary" @onclick="AsyncPartyDontStop">Ain't no Party Like an Async Party!</button>
+<div style="display: flex; flex-direction: column; align-items: center; top: 100px; left: 10px;">
+    <p>@_countDown</p>    
+    <div style="display: flex;">
+        <button class="btn btn-primary" @onclick="PartyPooper">Non-Async Method</button>
+        <button class="btn btn-primary" @onclick="AsyncPartyDontStop">Async Method</button>
+    </div>
+    
 </div>
-
-<img src="@currentImage" alt="Click me, I Dance!" @onclick="ChangeImage" style="cursor: pointer" />
-<img src="@currentImage2" alt="Click me, I Dance!" @onclick="ChangeImage2" style="cursor: pointer" />
+<p>Click on the cats to get them to dance. Try it while the async and non-async methods run</p>
+<img src="images/DiscoBall.gif" alt="Dance Party!"/>
+<img src="@currentImage" alt="Click me, I Dance!" @onclick="ChangeImage" style="cursor: pointer" height="300"/>
+<img src="@currentImage2" alt="Click me, I Dance!" @onclick="ChangeImage2" style="cursor: pointer" height="300"/>
 
 
 @code {
 
     private int currentImageIndex = 0;
     private int currentImageIndex2 = 0;
+    private string _countDown = "Click Buttons to Simulate Memory Consuming Process";
+
 
     private string currentImage => $"images/{imagePaths[currentImageIndex]}";
     private string currentImage2 => $"images/{imagePath2[currentImageIndex2]}";
-  
+
     private string[] imagePaths = new string[]
        {
         "cat-1a.png",
         "cat-1b.png",
        };
-       private string[] imagePath2 = new string[]
-       {
+    private string[] imagePath2 = new string[]
+    {
         "cat 2-a.jpg",
         "cat 2-b.jpg",
-       };    
+    };    
 
     private async Task AsyncPartyDontStop()
     {
-        await Task.Delay(10000);
+        _countDown = "Process Starting";
+        for(int i = 5; i >=0; i--)
+        {
+            _countDown = $"{i}";
+            await Task.Delay(1000);
+        }
+        _countDown = "Process Complete";
+        await Task.Delay(1000);
+        _countDown = "Click Buttons to Simulate Memory Consuming Process";
     }
 
     private void ChangeImage()
@@ -46,7 +61,15 @@
 
     private void PartyPooper()
     {
-        Thread.Sleep(10000);
+        _countDown = "Process Starting";
+        for (int i = 5; i >= 0; i--)
+        {
+            _countDown = $"{i}";
+            Thread.Sleep(1000);
+        }
+        _countDown = "Process Complete";
+        Thread.Sleep(500);
+        _countDown = "Click Buttons to Simulate Memory Consuming Process";
     }
 
 }
